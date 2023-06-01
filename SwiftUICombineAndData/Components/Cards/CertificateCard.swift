@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CertificateCard: View {
     
+    @AppStorage("isLiteMode") var isLiteMode = false
     @EnvironmentObject var certificateVM : CertificateViewModel
     @Binding var selection : Int
     
@@ -30,7 +31,9 @@ struct CertificateCard: View {
         .overlay(RoundedRectangle(cornerRadius: 30, style: .continuous).stroke(.white).blendMode(.overlay))
         .background(VisualEffectBlur(blurStyle: .systemUltraThinMaterialDark))
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-        .shadow(color: Color(#colorLiteral(red: 0.1647058824, green: 0.1098039216, blue: 0.3568627451, alpha: 1)).opacity(0.5), radius: 30, x: 0, y: 15)
+        .if(!isLiteMode, transform: { view in
+            view.shadow(color: Color(#colorLiteral(red: 0.1647058824, green: 0.1098039216, blue: 0.3568627451, alpha: 1)).opacity(0.5), radius: 30, x: 0, y: 15)
+        })
     }
     
     var content : some View {
@@ -102,7 +105,7 @@ struct CertificateCard: View {
 
 struct CertificateCard_Previews: PreviewProvider {
     static var previews: some View {
-        let certificate = Certificate(id: "000", course: "SwiftUI", date: "June 2nd 2022", logo: "Logo SwiftUI", instructor: "Matteo")
+        //let certificate = Certificate(id: "000", course: "SwiftUI", date: "June 2nd 2022", logo: "Logo SwiftUI", instructor: "Matteo")
         CertificateCard(selection: .constant(0))
             .environmentObject(CertificateViewModel())
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PrimaryButton: View {
     
+    @AppStorage("isLiteMode") var isLiteMode = false
     @Environment(\.colorScheme) var colorScheme : ColorScheme
     var text = "Contact Support"
     
@@ -40,6 +41,9 @@ struct PrimaryButton: View {
             RoundedRectangle(cornerRadius: 12)
                 .frame(height: 50)
                 .angularGradientGlow(colors: [Color(#colorLiteral(red: 0.3843137255, green: 0.5176470588, blue: 1, alpha: 1)), Color(#colorLiteral(red: 1, green: 0.4470588235, blue: 0.7137254902, alpha: 1)), Color(#colorLiteral(red: 0.8509803922, green: 0.6862745098, blue: 0.8509803922, alpha: 1)), Color(#colorLiteral(red: 0.5921568627, green: 0.8509803922, blue: 0.8823529412, alpha: 1)), Color(#colorLiteral(red: 0.3843137255, green: 0.5176470588, blue: 1, alpha: 1))])
+                .if(!isLiteMode, transform: { view in
+                    view.blur(radius: 8)
+                })
                 .blur(radius: 8)
             
             Text(text)

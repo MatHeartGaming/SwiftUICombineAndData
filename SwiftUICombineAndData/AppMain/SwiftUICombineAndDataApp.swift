@@ -11,9 +11,7 @@ import Firebase
 @main
 struct SwiftUICombineAndDataApp: App {
     
-    init() {
-        FirebaseApp.configure()
-    }
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
