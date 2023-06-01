@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @Environment(\.colorScheme) var colorScheme : ColorScheme
     @State private var contentOffset = CGFloat(0)
+    @State private var showCertificates = false
     
     var body: some View {
         NavigationStack {
@@ -42,6 +43,20 @@ struct ContentView: View {
     var content : some View {
         
         VStack {
+            
+            ProfileRow()
+                .onTapGesture {
+                    showCertificates.toggle()
+                }
+            
+            VStack {
+                NotificationRow()
+                Divider()
+                LiteModeRow()
+            }
+            .blurBackground()
+            .padding(.top, 20)
+            
             VStack {
                 NavigationLink {
                     FAQView()
@@ -64,11 +79,7 @@ struct ContentView: View {
                     MenuRow(title: "YouTube Channel", leftIcon: "play.rectangle.fill", rightIcon: "link")
                 })
             }
-            .padding()
-            .background(Color("Background 1"))
-            .background(VisualEffectBlur(blurStyle: .systemThinMaterialDark))
-            .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.white, lineWidth: 1).blendMode(.overlay))
-            .mask(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .blurBackground()
             .padding(.top, 20)
             
             Text("Version 1.0")
@@ -83,6 +94,9 @@ struct ContentView: View {
         .padding(.top, 20)
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
+        .sheet(isPresented: $showCertificates) {
+            CertificatesView()
+        }
     }
     
     var divider : some View {
